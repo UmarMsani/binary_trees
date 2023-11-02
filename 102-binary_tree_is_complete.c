@@ -8,10 +8,13 @@
  */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
+	int i;
+
+	int nodes = 0, index = 0;
+
 	if (!tree)
 		return (0);
 
-	int nodes = 0, index = 0;
 	binary_tree_t **queue = malloc(sizeof(binary_tree_t *) * 4096);
 
 	if (!queue)
@@ -24,20 +27,17 @@ int binary_tree_is_complete(const binary_tree_t *tree)
 		if (queue[index])
 		{
 			nodes++;
-
 			queue = realloc(queue, sizeof(binary_tree_t *) * (nodes * 2));
 
 			if (!queue)
 				return (0);
-
 			queue[nodes * 2 - 1] = queue[index]->left;
 			queue[nodes * 2] = queue[index]->right;
 		}
 
 		index++;
 	}
-
-	for (int i = 0; i < index; i++)
+	for (i = 0; i < index; i++)
 	{
 		if (!queue[i])
 		{
@@ -45,7 +45,6 @@ int binary_tree_is_complete(const binary_tree_t *tree)
 			return (0);
 		}
 	}
-
 	free(queue);
 	return (1);
 }
