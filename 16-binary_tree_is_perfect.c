@@ -1,5 +1,9 @@
 #include "binary_trees.h"
 
+size_t binary_tree_height(const binary_tree_t *tree);
+int binary_tree_is_perfect(const binary_tree_t *tree);
+
+
 /**
  * binary_tree_height - Get the height of a binary tree
  * @tree: Pointer to the root node of the tree
