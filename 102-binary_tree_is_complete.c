@@ -8,43 +8,41 @@
  */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
-	int i;
-
-	int nodes = 0, index = 0;
-
-	if (!tree)
+	if (tree == NULL)
 		return (0);
 
-	binary_tree_t **queue = malloc(sizeof(binary_tree_t *) * 4096);
+	/* Initialize a queue for level order traversal */
+	binary_tree_t **queue = malloc(sizeof(binary_tree_t *) * 1024);
+	size_t front = 0, rear = 0;
+	int flag = 0;
 
-	if (!queue)
-		return (0);
+	/* Push the root to the queue */
+	queue[rear++] = (binary_tree_t *)tree;
 
-	queue[0] = (binary_tree_t *)tree;
-
-	while (index <= nodes)
+	/* Perform level order traversal */
+	while (front < rear)
 	{
-		if (queue[index])
-		{
-			nodes++;
-			queue = realloc(queue, sizeof(binary_tree_t *) * (nodes * 2));
+		binary_tree_t *current = queue[front++];
 
-			if (!queue)
+		/* If we have encountered an empty node, set flag */
+		if (current == NULL)
+			flag = 1;
+		else
+		{
+			/* If flag is set, the tree is not complete */
+			if (flag)
+			{
+				free(queue);
 				return (0);
-			queue[nodes * 2 - 1] = queue[index]->left;
-			queue[nodes * 2] = queue[index]->right;
-		}
+			}
 
-		index++;
-	}
-	for (i = 0; i < index; i++)
-	{
-		if (!queue[i])
-		{
-			free(queue);
-			return (0);
+			/* Push left and right children to the queue */
+			queue[rear++] = current->left;
+			queue[rear++] = current->right;
 		}
 	}
+
 	free(queue);
+
 	return (1);
 }

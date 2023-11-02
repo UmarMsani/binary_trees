@@ -10,10 +10,23 @@
 avl_t *array_to_avl(int *array, size_t size)
 {
 	avl_t *root = NULL;
+	size_t x, y;
 
-	for (size_t i = 0; i < size; i++)
+	if (array == NULL)
+		return (NULL);
+
+	for (x = 0; x < size; x++)
 	{
-		avl_insert(&root, array[i]);
+		for (y = 0; y < x; y++)
+		{
+			if (array[y] == array[x])
+				break;
+		}
+		if (y == x)
+		{
+			if (avl_insert(&root, array[x]) == NULL)
+				return (NULL);
+		}
 	}
 
 	return (root);

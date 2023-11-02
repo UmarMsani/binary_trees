@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
+#include <limits.h>
 
 /* This is the data structures used in this project */
 
